@@ -82,7 +82,17 @@ h6 {
     padding: 0 20px;
 }
 
+.ag-cell,
+.ag-header-cell-label {
+    justify-content: center;
+    text-align: center;
+}
+
 .v-input--checkbox {
     padding-top: 0!important;
     margin-top: 0!important;
+}
+
+.v-card {
+    border-radius: 10px!important;
 }

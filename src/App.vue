@@ -14,6 +14,11 @@ import Component from 'vue-class-component';
 import {Provide} from 'vue-property-decorator';
 import AdminPanelLayout from './layout/admin-panel.layout.vue';
 import { Route } from 'vue-router';
+import VueAxios from 'vue-axios'
+import {Axios} from './http';
+import {PlantsService} from './service/plants.service';
+
+Vue.use(VueAxios, Axios);
 
 @Component({
   components: {
@@ -23,8 +28,10 @@ import { Route } from 'vue-router';
 })
 export default class App extends Vue {
 
+  @Provide() plantsService: PlantsService = new PlantsService(this.$http);
+   
   public created() {
-
+    
   }
 
 }

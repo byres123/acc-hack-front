@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1 class="h1">План загрузки цехов</h1>
-        
+        <h1 class="h1">Загрузка ресурсов по цеху: Конвертерный цех 1</h1>
+
         <div class="btn-wrapper">
             <v-menu
                 v-model="dateMenuFrom"
@@ -43,7 +43,7 @@
             </v-menu>
             <v-spacer />
         </div>
-    
+
         <v-card class="grid-wrapper">
             <ag-grid-vue
                  class="ag-theme-material"
@@ -73,23 +73,20 @@
 </style>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from 'vue'
 import Component from 'vue-class-component';
 import { AgGridVue } from 'ag-grid-vue';
-import { GridApi, GridOptions, ColDef, GridReadyEvent, ModelUpdatedEvent } from 'ag-grid-community';
-import { Inject } from 'vue-property-decorator';
-import { PlantsService } from '../service/plants.service';
+import { GridApi, ColDef, GridOptions, GridReadyEvent } from 'ag-grid-community';
 import CongestionAgGrid from '../components/ag-grid/congestion.ag-grid.vue';
 import WorkshopAgGrid from '../components/ag-grid/workshop.ag-grid.vue';
+import WorkshopGroupAgGrid from '../components/ag-grid/workshop-group.ag-grid.vue';
 
 @Component({
     components: {
-        AgGridVue,
+        AgGridVue
     }
 })
-export default class PlanPage extends Vue {
-
-    @Inject() plantsService!: PlantsService;
+export default class WorkshopPlanPage extends Vue {
 
     public dateFrom: string = (new Date()).toISOString().slice(0,10);
     public dateMenuFrom: boolean = false;
@@ -103,10 +100,9 @@ export default class PlanPage extends Vue {
 
     public columnDefs: ColDef[] = [
         {
-            headerName: 'Цех',
+            headerName: 'Группа',
             field: 'fullName',
-            sortable: true,
-            cellRenderer: 'workshop'
+            sortable: true
         },
         {
             headerName: 'KPI',
@@ -118,50 +114,125 @@ export default class PlanPage extends Vue {
                     return sum + current.percentage
                 }, 0)/i + '%';
             }
+        }
+    ];
+
+    testData: any[] = [
+        {
+            id: 0,
+            fullName: "G_AEIPT",
+            shortName: "G_AEIPT",
+            timeData: [
+                {
+                    date: "2020-04-25",
+                    percentage: 0,
+                },
+                {
+                    date: "2020-04-26",
+                    percentage: 50,
+                },
+                {
+                    date: "2020-04-27",
+                    percentage: 10,
+                },
+                {
+                    date: "2020-04-28",
+                    percentage: 30,
+                },
+                {
+                    date: "2020-04-29",
+                    percentage: 100,
+                }
+            ]
         },
+        {
+            id: 1,
+            fullName: "G_ANGC1H",
+            shortName: "G_ANGC1H",
+            timeData: [
+                {
+                    date: "2020-04-25",
+                    percentage: 0,
+                },
+                {
+                    date: "2020-04-26",
+                    percentage: 50,
+                },
+                {
+                    date: "2020-04-27",
+                    percentage: 10,
+                },
+                {
+                    date: "2020-04-28",
+                    percentage: 30,
+                },
+                {
+                    date: "2020-04-29",
+                    percentage: 100,
+                }
+            ]
+        },
+        {
+            id: 2,
+            fullName: "G_ANGC3H",
+            shortName: "G_ANGC3H",
+            timeData: [
+                {
+                    date: "2020-04-25",
+                    percentage: 0,
+                },
+                {
+                    date: "2020-04-26",
+                    percentage: 50,
+                },
+                {
+                    date: "2020-04-27",
+                    percentage: 10,
+                },
+                {
+                    date: "2020-04-28",
+                    percentage: 30,
+                },
+                {
+                    date: "2020-04-29",
+                    percentage: 100,
+                }
+            ]
+        }
     ]
 
     public frameworkComponents: any = {
-        congestion: CongestionAgGrid,
-        workshop: WorkshopAgGrid
+        workshop: WorkshopGroupAgGrid
     }
 
     public gridOptions: GridOptions = {
         columnDefs: this.columnDefs,
         onGridReady: e => this.onGridReady(e),
-        onModelUpdated: e => this.onModelUpdated(e),
         frameworkComponents: this.frameworkComponents
     }
 
-    public created(): void {
-        let columnDefs = [...this.columnDefs];
-        this.plantsService.getPlants()
-        .then(res => {
-            this.rowData = res.data;
-            if(!this.rowData.length) return;
-
-            let pinnedRow = {};
-
-            this.rowData[0].timeData.forEach(el => {
-                columnDefs.push({
-                    headerName: el.date,
-                    sortable: true,
-                    valueGetter: () => el.percentage,
-                    cellRenderer: 'congestion'
-                });
-            })
-            
-            this.gridApi.setColumnDefs(columnDefs);
-            this.gridApi.sizeColumnsToFit();
-        });
+    created(): void {
+        
     }
 
     public onGridReady(event: GridReadyEvent) {
         this.gridApi = event.api;
-    }
 
-    public onModelUpdated(event: ModelUpdatedEvent) {
-        // this.gridApi
+        let columnDefs = [...this.columnDefs];
+        this.rowData = this.testData;
+        if(!this.rowData.length) return;
+
+        this.rowData[0].timeData.forEach(el => {
+            columnDefs.push({
+                headerName: el.date,
+                sortable: true,
+                valueGetter: () => el.percentage,
+                cellRenderer: 'workshop'
+            });
+        })
+        console.log(columnDefs);
+        this.gridApi.setColumnDefs(columnDefs);
+        this.gridApi.sizeColumnsToFit();
     }
 
 }
