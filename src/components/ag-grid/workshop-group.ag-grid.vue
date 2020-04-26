@@ -1,10 +1,23 @@
 <template>
-    <LoadingColumnDialogComponent 
-        :value="value"
-        :date="date"
-        :fullName="fullName"
-        :items="items" />
+    <div @click="openModal()" class="column-wrapper">
+        <LoadingColumnDialogComponent 
+            :value="value" />
+
+        <v-dialog v-model="dialog"
+            width="600">
+            <v-card>
+                
+            </v-card>
+        </v-dialog>
+    </div>
 </template>
+
+<style lang="postcss" scoped>
+    .column-wrapper {
+        width: 100%;
+        height: 100%;
+    }
+</style>
 
 <script lang="ts">
 import Vue from 'vue';
@@ -20,6 +33,8 @@ export default class WorkshopGroupAgGrid extends Vue {
     public value: number = 0;
     public date: string = '';
     public fullName: string = '';
+
+    public dialog: boolean = false;
 
     public items: any[] = [
         {
@@ -52,6 +67,10 @@ export default class WorkshopGroupAgGrid extends Vue {
         this.date = this.$data.params.colDef.headerName;
         this.value = this.$data.params.value;
         this.fullName = this.$data.params.data.fullName;
+    }
+
+    openModal(): void {
+        this.dialog = true;
     }
 }
 </script>

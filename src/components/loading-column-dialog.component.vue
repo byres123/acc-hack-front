@@ -5,7 +5,7 @@
             <span class="value">{{value}}%</span>
         </div>
 
-        <v-dialog v-model="dialog"
+        <v-dialog v-if="items" v-model="dialog"
             width="600">
             <v-card>
                 <!-- <v-toolbar
@@ -28,6 +28,18 @@
                             <div class="column">
                                 <div :style="{width: item.value+'%'}" :class="['loader', getColor(item.value)]"></div>
                                 <span class="value">{{item.value}}%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <v-divider class="table-item" />
+
+                    <div class="table-item">
+                        <span class="table-title table-item__title">Average</span>
+                        <div class="table-value table-item__value">
+                            <div class="column">
+                                <div :style="{width: getAvg()+'%'}" :class="['loader', getColor(getAvg())]"></div>
+                                <span class="value">{{getAvg()}}%</span>
                             </div>
                         </div>
                     </div>
@@ -90,6 +102,9 @@
         border-radius: 5px;
         overflow: hidden;
     }
+    .avg {
+        margin-top: 35px;
+    }
 </style>
 
 <script lang="ts">
@@ -102,10 +117,10 @@ export default class LoadingColumnDialogComponent extends Vue {
 
     @Prop() public value!: string
 
-    @Prop() public date!: string;
-    @Prop() public fullName!: string;
+    @Prop() public date?: string;
+    @Prop() public fullName?: string;
 
-    @Prop() public items!: {name: string, value: number}[];
+    @Prop() public items?: {name: string, value: number}[];
 
     public dialog: boolean = false;
 
@@ -113,6 +128,14 @@ export default class LoadingColumnDialogComponent extends Vue {
         if(percent < 80) return 'red lighten-3';
         if(percent < 95) return 'yellow lighten-3';
         return 'green lighten-1';
+    }
+
+    public getAvg(): number {
+        let i=0;
+        return this.items.reduce((sum, current) => {
+            i++
+            return sum + current.value
+        }, 0)/i;
     }
 
     public openDialog() {
