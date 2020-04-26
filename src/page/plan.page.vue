@@ -106,17 +106,19 @@ export default class PlanPage extends Vue {
             headerName: 'Цех',
             field: 'fullName',
             sortable: true,
+            minWidth: 250,
             cellRenderer: 'workshop'
         },
         {
             headerName: 'KPI',
             sortable: true,
+            minWidth: 150,
             valueGetter: (p) => {
                 let i = 0;
-                return p.data.timeData.reduce((sum: number, current: any) => {
-                    i++
-                    return sum + current.percentage
-                }, 0)/i + '%';
+                return Math.round(p.data.timeData.reduce((sum: number, current: any) => {
+                    if(i++>10) return sum;
+                    return sum + current.percent
+                }, 0)/i) + '%';
             }
         },
     ]
@@ -141,12 +143,14 @@ export default class PlanPage extends Vue {
             if(!this.rowData.length) return;
 
             let pinnedRow = {};
-
-            this.rowData[0].timeData.forEach(el => {
+            let i=0;
+            this.rowData[0].timeData.forEach((el: any) => {
+                if(i++>10) return;
                 columnDefs.push({
-                    headerName: el.date,
+                    headerName: el.start,
+                    minWidth: 150,
                     sortable: true,
-                    valueGetter: () => el.percentage,
+                    valueGetter: () => Math.round(el.percent),
                     cellRenderer: 'congestion'
                 });
             })

@@ -6,7 +6,20 @@
         <v-dialog v-model="dialog"
             width="600">
             <v-card>
-                
+                <v-card-title
+                    color="purple"
+                    class="headline grey lighten-2"
+                    primary-title
+                >
+                    Доступные для оптимизации заказы:
+                </v-card-title>
+                <v-card-text class="dialog-content">
+                    <h3 class="h3">заказ1 - оптимизировать вручную</h3>
+                    <h3 class="h3">заказ2- оптимизировать вручную</h3>
+                    <h3 class="h3">заказ3- оптимизировать вручную</h3>
+
+                    <!-- <p>Оптимизировать автоматически (высвечивается предупреждение - ОК - все оптимизируется автоматически)</p> -->
+                </v-card-text>
             </v-card>
         </v-dialog>
     </div>
@@ -16,6 +29,9 @@
     .column-wrapper {
         width: 100%;
         height: 100%;
+    }
+    .dialog-content {
+        padding-top: 20px!important;
     }
 </style>
 

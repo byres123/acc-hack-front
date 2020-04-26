@@ -222,7 +222,7 @@ export default class WorkshopPlanPage extends Vue {
         this.rowData = this.testData;
         if(!this.rowData.length) return;
 
-        this.rowData[0].timeData.forEach(el => {
+        this.rowData[0].timeData.forEach((el: any) => {
             columnDefs.push({
                 headerName: el.date,
                 sortable: true,

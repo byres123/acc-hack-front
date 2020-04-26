@@ -8,12 +8,6 @@
         <v-dialog v-if="items" v-model="dialog"
             width="600">
             <v-card>
-                <!-- <v-toolbar
-                    color="indigo"
-                    dark
-                    >
-                    123
-                </v-toolbar> -->
                 <v-card-title
                     color="purple"
                     class="headline grey lighten-2"
@@ -132,10 +126,11 @@ export default class LoadingColumnDialogComponent extends Vue {
 
     public getAvg(): number {
         let i=0;
-        return this.items.reduce((sum, current) => {
+        if(!this.items) return 0;
+        return Math.round(this.items.reduce((sum, current) => {
             i++
             return sum + current.value
-        }, 0)/i;
+        }, 0)/i);
     }
 
     public openDialog() {
