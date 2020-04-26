@@ -167,7 +167,8 @@ export default class PlanPage extends Vue {
         this.plantsService.getTotal(this.dateFrom, this.dateTo)
             .then(res => {
                 // res.data.fullName = 'AVG';
-                this.gridApi.setPinnedBottomRowData([res.data]);
+                if(!res.data) this.gridApi.setPinnedBottomRowData([]);
+                else this.gridApi.setPinnedBottomRowData([res.data]);
             })
     }
 

@@ -39,6 +39,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import LoadingColumnDialogComponent  from '../loading-column-dialog.component.vue';
+import { Inject } from 'vue-property-decorator';
+import { PlantsService } from '../../service/plants.service';
 
 @Component({
     components: {
@@ -46,38 +48,12 @@ import LoadingColumnDialogComponent  from '../loading-column-dialog.component.vu
     }
 })
 export default class WorkshopGroupAgGrid extends Vue {
+
     public value: number = 0;
     public date: string = '';
     public fullName: string = '';
 
     public dialog: boolean = false;
-
-    public items: any[] = [
-        {
-            name: 'G_APGKRD_Seq_16',
-            value: 100
-        },
-        {
-            name: 'G_ARG2T_Seq_40',
-            value: 80
-        },
-        {
-            name: 'G_APRRG_Seq_23',
-            value: 0
-        },
-        {
-            name: 'G_AR3T_Seq_44',
-            value: 50
-        },
-        {
-            name: 'G_AR3T_Seq_43',
-            value: 50
-        },
-        {
-            name: 'G_APRRG_Seq_20',
-            value: 50
-        }
-    ]
 
     created(): void {
         this.date = this.$data.params.colDef.headerName;

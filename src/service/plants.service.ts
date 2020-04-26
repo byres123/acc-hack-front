@@ -27,5 +27,8 @@ export class PlantsService {
         return this.http.get(`${this.path}plants/average?from_time=${startDate}&to_time=${endDate}`);
     }
 
+    getGroups(planId: number, date: string): Promise<AxiosResponse<any>> {
+        return this.http.get(`${this.path}plants/${planId}/group?time=${date}`);
+    }
 
 }

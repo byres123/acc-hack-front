@@ -6,7 +6,7 @@
         </div>
 
         <v-dialog v-if="items" v-model="dialog"
-            width="600">
+            width="800">
             <v-card>
                 <v-card-title
                     color="purple"
@@ -73,11 +73,15 @@
         height: 50px;
         margin-top: 25px;
         margin-bottom: 10px;
+        background: #f1f1f1;
         &__title {
             display: flex;
             align-items: center;
             width: 40%;
             height: 100%;
+            padding-left: 10px;
+            padding-right: 15px;
+            color: #000;
         }
         &__value {
             display: flex;
@@ -87,8 +91,9 @@
         }
     }
     .table-title {
-        font-size: 24px;
+        font-size: 18px;
         font-weight: 700;
+        line-height: normal;
     }
     .table-value {
         font-size: 24px;
@@ -105,9 +110,12 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Inject, Prop } from 'vue-property-decorator';
+import { PlantsService } from '../service/plants.service';
 
 @Component
 export default class LoadingColumnDialogComponent extends Vue {
+
+    @Inject() public plantsService!: PlantsService;
 
     @Prop() public value!: string
 
@@ -115,6 +123,8 @@ export default class LoadingColumnDialogComponent extends Vue {
     @Prop() public fullName?: string;
 
     @Prop() public items?: {name: string, value: number}[];
+
+    @Prop() public id?: number;
 
     public dialog: boolean = false;
 
@@ -134,6 +144,17 @@ export default class LoadingColumnDialogComponent extends Vue {
     }
 
     public openDialog() {
+        if(this.id && this.date) {
+            this.plantsService.getGroups(this.id, this.date)
+            .then(res => {
+                this.items = res.data.timeData.map((item: any) => {
+                    return {
+                        name: item.resource_grup_short_name,
+                        value: Math.round(item.percent)
+                    }
+                });
+            })
+        }
         this.dialog = true;
     }
 
