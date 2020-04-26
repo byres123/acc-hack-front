@@ -230,7 +230,6 @@ export default class WorkshopPlanPage extends Vue {
                 cellRenderer: 'workshop'
             });
         })
-        console.log(columnDefs);
         this.gridApi.setColumnDefs(columnDefs);
         this.gridApi.sizeColumnsToFit();
     }

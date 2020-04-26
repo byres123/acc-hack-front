@@ -88,6 +88,13 @@ h6 {
     text-align: center;
 }
 
+.ag-cell {
+    display: flex;
+    align-items: center;
+    white-space: normal!important;
+    line-height: normal!important;
+}
+
 .v-input--checkbox {
     padding-top: 0!important;
     margin-top: 0!important;

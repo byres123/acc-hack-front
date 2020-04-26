@@ -39,6 +39,8 @@
 
 <style lang="scss" scoped>
     .column-wrapper {
+        width: 100%;
+        height: 100%;
         cursor: pointer;
     }
     .column {
