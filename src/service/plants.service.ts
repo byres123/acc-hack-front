@@ -11,8 +11,20 @@ export class PlantsService {
         this.http = http
     }
 
-    getPlants(): Promise<AxiosResponse<any[]>> {
+    getAllPlants(): Promise<AxiosResponse<any[]>> {
         return this.http.get(this.path + 'plants/');
+    }
+
+    getPlants(startDate: string, endDate: string): Promise<AxiosResponse<any[]>> {
+        return this.http.get(`${this.path}plants/?from_time=${startDate}&to_time=${endDate}`);
+    }
+
+    getTotalAll(): Promise<AxiosResponse<any[]>> {
+        return this.http.get(this.path + 'plants/average');
+    }
+
+    getTotal(startDate: string, endDate: string): Promise<AxiosResponse<any>> {
+        return this.http.get(`${this.path}plants/average?from_time=${startDate}&to_time=${endDate}`);
     }
 
 

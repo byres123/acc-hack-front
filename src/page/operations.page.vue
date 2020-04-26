@@ -35,7 +35,7 @@ export default class OperationsPage extends Vue {
 
     public columnDefs: ColDef[] = [
         {
-            headerName: 'Опирация',
+            headerName: 'Операция',
             field: 'description',
             sortable: true,
             minWidth: 250
