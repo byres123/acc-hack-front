@@ -3,8 +3,7 @@
         :id="id"
         :value="value"
         :date="date"
-        :fullName="fullName"
-        :items="items" />
+        :fullName="fullName"/>
 </template>
 
 <style lang="scss" scoped>
@@ -28,33 +27,6 @@ export default class CongestionAgGrid extends Vue {
     public date: string = '';
     public fullName: string = '';
     public id?: number;
-
-    public items: any[] = [
-        {
-            name: 'G_AEIPT',
-            value: 100
-        },
-        {
-            name: 'G_ANGC1H',
-            value: 80
-        },
-        {
-            name: 'G_ANGC3H',
-            value: 0
-        },
-        {
-            name: 'G_ANGCD',
-            value: 50
-        },
-        {
-            name: 'G_ANOD',
-            value: 50
-        },
-        {
-            name: 'G_ANOG1T',
-            value: 50
-        }
-    ]
 
     created(): void {
         this.date = this.$data.params.colDef.headerName;
