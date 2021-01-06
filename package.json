@@ -10,7 +10,7 @@
   "dependencies": {
     "ag-grid-community": "^23.0.2",
     "ag-grid-vue": "^23.0.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.4",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
